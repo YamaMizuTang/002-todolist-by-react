@@ -4,7 +4,7 @@ const AddEvent = ({ afterAdded }) => {
   let [input, setInput] = useState("");
 
   const submit = async () => {
-    await fetch(`http://127.0.0.1:3001/add?newEvent=${input}`);
+    await fetch(`http://127.0.0.1:3001/add?name=${input}`);
     setInput("");
     await afterAdded();
   }
@@ -25,13 +25,17 @@ const RenderList = () => {
   const [list, setList] = useState([]);
   
   const getList = async () => {
-    let fetchPromise = await fetch("http://127.0.0.1:3001/list"); 
+    let fetchPromise = await fetch("http://127.0.0.1:3001/list", {
+    method: 'POST', 
+  }); 
     let todosArray = await fetchPromise.json(); 
     setList(todosArray);
   }
 
   const deleteHandler = async (id) => {
-    await fetch(`http://127.0.0.1:3001/delete?id=${id}`); 
+    await fetch(`http://127.0.0.1:3001/${id}`, {
+      method:'DELETE' , 
+    }); 
     getList();
   }
 
